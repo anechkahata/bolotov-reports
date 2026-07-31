@@ -1,0 +1,4 @@
+# Locked reports are byte-exact artifacts: never rewrite line endings.
+# Without this, a Windows contributor with core.autocrlf=true would publish
+# bytes different from the ones that were built and verified.
+*.html -text
