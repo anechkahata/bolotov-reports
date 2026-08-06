@@ -1,0 +1,35 @@
+name: Deploy reports to Pages
+
+# The legacy branch-based Pages pipeline started failing on this repo on 2026-08-06:
+# every build sat in `building` for ~15 min, then errored with a bare "Page build failed"
+# and duration 0, on content that is five static files. Publishing went through the
+# Actions pipeline instead. The site is plain static HTML — this uploads it as-is.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - id: deployment
+        uses: actions/deploy-pages@v4
