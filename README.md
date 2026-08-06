@@ -10,12 +10,14 @@ the browser, so the repository may stay public.
 
 | Path | What | Runbook |
 |---|---|---|
-| [`finance/`](finance/) | Monthly supervisor report (P&L, cash, channels) — a month picker, one folder per month | `finance` repo → `finance/MONTHLY-CLOSE.md` §6 |
+| [`finance/`](finance/) | Monthly supervisor report (P&L, cash, channels) — **all months in one encrypted page**, password once, months switch instantly | `finance` repo → `finance/MONTHLY-CLOSE.md` §6 |
 | `reels-quality/` | Reels quality report | `analytics` repo |
 
-The finance link handed to the supervisor is the picker, not a month:
-`https://anechkahata.github.io/bolotov-reports/finance/` — it does not change
-month to month, a new month is added as one more row plus its folder.
+The finance link handed to the supervisor:
+`https://anechkahata.github.io/bolotov-reports/finance/` — it does not change month
+to month. One page holds every month: the password is asked once, then the months
+are tabs, so moving from July to June never asks again. A new month is added by
+rebuilding that one page (`lock_reports_bundle.py`), not by adding a folder.
 
-Nothing in this repository is readable without the password: every month page
-is ciphertext plus a password gate. The picker itself carries no figures.
+Nothing in this repository is readable without the password: the finance page is
+one AES-256-GCM blob holding every month, with a password gate in front of it.
